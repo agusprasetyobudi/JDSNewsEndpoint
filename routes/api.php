@@ -5,6 +5,7 @@ use App\Http\Controllers\API\MatchRepotingController;
 use App\Http\Controllers\API\TeamController;
 use App\Http\Controllers\API\TeamPersonController;
 use App\Http\Controllers\API\MatchScheduleController;
+use App\Http\Controllers\API\NewsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,33 +30,12 @@ Route::prefix('auth')->group(function () {
 
 });
 
-// Route::middleware(['auth:api'])->group(function () {
-//     Route::post('auth/logout', [AuthController::class,'Logout']);
-//     Route::prefix('teams')->group(function () {
-//         Route::get('/', [TeamController::class,'show']);
-//         Route::post('create', [TeamController::class,'store']);
-//         Route::post('update/{id}', [TeamController::class,'update']);
-//         Route::post('delete/{id}', [TeamController::class,'destroy']);
-//         Route::prefix('person')->group(function () {
-//             Route::get('/', [TeamPersonController::class,'show']);
-//             Route::post('create', [TeamPersonController::class,'store']);
-//             Route::post('update/{id}', [TeamPersonController::class,'update']);
-//             Route::post('delete/{id}', [TeamPersonController::class,'destroy']);
-//         });
-//     });
-//     Route::prefix('match')->group(function () {
-//         Route::get('/', [MatchScheduleController::class,'show']);
-//         Route::post('create', [MatchScheduleController::class,'store']);
-//         Route::post('update/{id}', [MatchScheduleController::class,'update']);
-//         Route::post('delete/{id}', [MatchScheduleController::class,'update']);
-//         Route::prefix('log')->group(function () {
-//             Route::get('/{match}', [MatchScheduleController::class,'viewLogMatch']);
-//             Route::post('create', [MatchScheduleController::class,'storeLogMatch']);
-//             Route::post('delete/{id}', [MatchScheduleController::class,'removeLogMatch']);
-//         });
-//         Route::prefix('report')->group(function () {
-//             Route::get('match-result', [MatchRepotingController::class,'index']);
-//         });
-//     });
-// });
+Route::middleware(['auth:api'])->group(function () {
+    Route::prefix('news')->group(function () {
+        Route::get('get', [NewsController::class,'index']);
+        Route::post('create', [NewsController::class,'create']);
+        Route::put('update', [NewsController::class,'update']);
+        Route::delete('delete', [NewsController::class,'destroy']);
+    });
+});
 

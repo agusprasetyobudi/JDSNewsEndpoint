@@ -2,16 +2,15 @@
 
 namespace App\Repository;
 
+use App\Traits\RedisTraits;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 class BaseRepository
 {
-
+    use RedisTraits;
     protected $model;
-
-
 
     /**
      * construct function
@@ -48,9 +47,9 @@ class BaseRepository
      * @param Illuminate\Http\Request
      * @return void
      */
-    public function paginate(Request $request): Request
+    public function paginate($page)
     {
-        return $this->model->paginate($request->page,10);
+        return $this->model->paginate($page,10);
     }
 
     public function store(Request $request)

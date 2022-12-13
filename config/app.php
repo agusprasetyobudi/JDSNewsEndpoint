@@ -56,6 +56,8 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'paginatrion_url' => env('PAGINATION_URL', 'http://localhost'),
+
     'asset_url' => env('ASSET_URL'),
 
     /*

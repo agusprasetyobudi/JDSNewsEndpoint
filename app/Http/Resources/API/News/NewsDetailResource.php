@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\API\Posts;
+namespace App\Http\Resources\API\News;
 
-use Carbon\Carbon;
+use App\Http\Resources\API\Users\UserResources;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AuthorResources extends JsonResource
+class NewsDetailResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,8 +17,10 @@ class AuthorResources extends JsonResource
     {
         return [
             'name' => $this->name,
-            'email' => $this->email??'',
-            'joined_at' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
+            'slug' => $this->slug,
+            'status' => $this->is_post,
+            'author' => new UserResources($this->author),
+            'post' => $this->post
         ];
     }
 }
