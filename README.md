@@ -26,3 +26,5 @@ after the docker-compose continue to access web for migrate & seeder data.
 ```bash
 https://localhost/call-migration
 ``` 
+
+postman link public : https://elements.getpostman.com/redirect?entityId=4270905-0112740e-23c9-4f89-8cc1-fb6ef1bc2931&entityType=collection
