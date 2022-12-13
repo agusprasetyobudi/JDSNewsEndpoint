@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Events\NewsLogEvent;
 use App\Helper\ResponseHelpers;
 use App\Http\Resources\API\News\NewsDetailResource;
 use App\Http\Resources\API\News\NewsPaginateResource;
@@ -47,6 +48,7 @@ class NewsServices implements INewsServices {
                 $request->merge(['image'=>'news/'.$nameFile]);
             }
             $data = $this->model->create($request);
+            event(new NewsLogEvent('news','create',$data->id));
             return ResponseHelpers::successResponse(200,"News $request->is_post",new NewsDetailResource($data));
         } catch (\Throwable $th) {
             Log::error($th->getMessage());
@@ -64,6 +66,8 @@ class NewsServices implements INewsServices {
                 $request->merge(['image'=>'news/'.$nameFile,'slug'=> Str::slug($request->name)]);
             }
             $data = $this->model->update($request->query('post'),$request);
+
+            event(new NewsLogEvent('news','update',$data->id));
             // $data = $this->model->find($request->query('post'));
             // dd($data->authors->name);
             return ResponseHelpers::successResponse(200,"News $request->is_post",new NewsDetailResource($data));
@@ -72,4 +76,15 @@ class NewsServices implements INewsServices {
             return ResponseHelpers::errorResponse(400,'Update News Error');
         }
     }
+    public function DeleteNews(Request $request)
+    {
+        try {
+            $data = $this->model->delete($request->post);
+            event(new NewsLogEvent('news','delete',$data->id));
+            return ResponseHelpers::successResponse(200,"News Deleted",new NewsDetailResource($data));
+        } catch (\Throwable $th) {
+            return ResponseHelpers::errorResponse(400,'Delete News Error');
+        }
+    }
+
 }

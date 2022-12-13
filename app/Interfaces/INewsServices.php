@@ -8,5 +8,5 @@ interface INewsServices
     public function StoreNews(Request $request);
     public function GetNews(Request $request);
     public function UpdateNews(Request $request);
-    // public function DeleteNews(Request $request);
+    public function DeleteNews(Request $request);
 }

@@ -69,6 +69,13 @@ class NewsRepository extends BaseRepository
         return $model;
     }
 
+    public function delete($id)
+    {
+        $model = $this->model->find($id);
+        $models = $model->delete();
+        return $model;
+    }
+
     /**
      * Payloadsfunction
      * Set Payload function before stored to resource
@@ -78,14 +85,6 @@ class NewsRepository extends BaseRepository
      */
     public function payloads(Request $request)
     {
-        // dd([
-        //     'name'      => $request->name,
-        //     'slug'      => Str::slug($request->name),
-        //     'images'    => $request->image,
-        //     'is_post'   => $request->is_post,
-        //     'post'      => $request->post,
-        //     'author'    => auth()->user()->id,
-        // ]);
         return [
             'name'      => $request->name,
             'slug'      => Str::slug($request->name),
