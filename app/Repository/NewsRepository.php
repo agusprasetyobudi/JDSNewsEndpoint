@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Models\News;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Str;
 
 class NewsRepository extends BaseRepository
 {
@@ -18,6 +18,12 @@ class NewsRepository extends BaseRepository
     {
         $paginate = $this->model->paginate($page);
         $paginate->setPath(env('PAGINATION_URL')."/news");
+        return $paginate;
+    }
+
+    public function find($id)
+    {
+        $paginate = $this->model->findOrFail($id);
         return $paginate;
     }
 
@@ -40,6 +46,7 @@ class NewsRepository extends BaseRepository
         return $model;
     }
 
+
     /**
      * create news function
      *
@@ -55,8 +62,10 @@ class NewsRepository extends BaseRepository
 
     public function update($id, Request $request)
     {
-        $model = $this->model->where('id',$id)->update($this->payloads($request));
-        $this->redis_store('news:slug:'.$request->slug,$model);
+        $model = $this->model->find($id);
+        $model->fill($this->payloads($request));
+        $model->save();
+        $this->redis_store('news:slug:'.$model->slug,$model);
         return $model;
     }
 
@@ -69,9 +78,17 @@ class NewsRepository extends BaseRepository
      */
     public function payloads(Request $request)
     {
+        // dd([
+        //     'name'      => $request->name,
+        //     'slug'      => Str::slug($request->name),
+        //     'images'    => $request->image,
+        //     'is_post'   => $request->is_post,
+        //     'post'      => $request->post,
+        //     'author'    => auth()->user()->id,
+        // ]);
         return [
             'name'      => $request->name,
-            'slug'      => $request->slug,
+            'slug'      => Str::slug($request->name),
             'images'    => $request->image,
             'is_post'   => $request->is_post,
             'post'      => $request->post,

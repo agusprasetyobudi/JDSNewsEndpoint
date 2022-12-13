@@ -34,7 +34,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::prefix('news')->group(function () {
         Route::get('get', [NewsController::class,'index']);
         Route::post('create', [NewsController::class,'create']);
-        Route::put('update', [NewsController::class,'update']);
+        Route::post('update', [NewsController::class,'update']);
         Route::delete('delete', [NewsController::class,'destroy']);
     });
 });

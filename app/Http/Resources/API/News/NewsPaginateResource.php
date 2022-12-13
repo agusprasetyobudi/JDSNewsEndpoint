@@ -2,11 +2,9 @@
 
 namespace App\Http\Resources\API\News;
 
-use App\Http\Resources\API\Posts\AuthorResources;
-use App\Http\Resources\API\Users\UserResources;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class NewsDetailResource extends JsonResource
+class NewsPaginateResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,12 +14,9 @@ class NewsDetailResource extends JsonResource
      */
     public function toArray($request)
     {
+        // return parent::toArray($request);
         return [
-            'name' => $this->name,
-            'slug' => $this->slug,
-            'status' => $this->is_post,
-            'author' => new AuthorResources($this->authors),
-            'post' => $this->post
+            'page' => $this->items()
         ];
     }
 }

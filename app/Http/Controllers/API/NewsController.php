@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\NewsStoreRequest;
 use App\Interfaces\INewsServices;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,7 @@ class NewsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(NewsStoreRequest $request)
     {
         return $this->services->StoreNews($request);
     }
@@ -41,9 +42,9 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(NewsStoreRequest $request)
     {
-        //
+        return $this->services->UpdateNews($request);
     }
 
     /**

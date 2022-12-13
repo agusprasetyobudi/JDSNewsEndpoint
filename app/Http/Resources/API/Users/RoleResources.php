@@ -16,7 +16,7 @@ class RoleResources extends JsonResource
     {
         return [
             'name' => $this->display_name,
-            'has_permission' => new PermissionsResources($this->permissions)
+            'has_permission' => new PermissionsResources($this->permissions)??null
         ];
     }
 }
