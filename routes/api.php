@@ -30,12 +30,14 @@ Route::prefix('auth')->group(function () {
 
 });
 
-Route::middleware(['auth:api','role:admin'])->group(function () {
-    Route::prefix('news')->group(function () {
+Route::middleware(['auth:api'])->group(function () {
+    Route::prefix('news')->middleware('role:admin')->group(function () {
         Route::get('get', [NewsController::class,'index']);
         Route::post('create', [NewsController::class,'create']);
         Route::post('update', [NewsController::class,'update']);
         Route::delete('delete', [NewsController::class,'destroy']);
     });
 });
+
+
 
