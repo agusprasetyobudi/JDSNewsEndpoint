@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('call-migration',function(){
     try {
         Artisan::call('migrate:fresh');
+        Artisan::call('db:seed');
+        Artisan::call('passport:install --force');
         return response("Migrate Success",200);
     } catch (\Throwable $th) {
         throw $th;

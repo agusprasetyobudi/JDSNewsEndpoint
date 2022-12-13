@@ -30,7 +30,7 @@ Route::prefix('auth')->group(function () {
 
 });
 
-Route::middleware(['auth:api'])->group(function () {
+Route::middleware(['auth:api','role:admin'])->group(function () {
     Route::prefix('news')->group(function () {
         Route::get('get', [NewsController::class,'index']);
         Route::post('create', [NewsController::class,'create']);
